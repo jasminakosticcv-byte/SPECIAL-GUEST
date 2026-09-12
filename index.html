@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Special Guest</title>
+<style>
+:root{--bg:#0d0f14;--card:#171a22;--panel:#242936;--text:#f7f7f7;--muted:#a9b0bd;--border:#333947;--accent:#f3c64b;--accentText:#141414}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:720px;margin:auto;padding:28px 18px 56px}.hidden{display:none!important}.center{text-align:center}.eyebrow{font-size:12px;letter-spacing:.28em;color:var(--muted)}h1{font-size:44px;line-height:1;margin:12px 0;font-weight:900}.introtext{max-width:460px;margin:20px auto}.missionbox,.card,.finalbox{border:1px solid var(--border);background:var(--card);border-radius:18px;padding:22px}.missionbox{max-width:330px;margin:24px auto;font-weight:900;line-height:1.9}.muted{color:var(--muted)}button{font:inherit;cursor:pointer}.primary{border:0;border-radius:12px;background:var(--accent);color:var(--accentText);padding:14px 20px;font-weight:900;min-height:46px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center}.category,.counter{font-size:14px;font-weight:800;color:var(--muted)}.progressTrack{height:8px;background:var(--panel);border-radius:99px;overflow:hidden;margin:14px 0 18px}.progress{height:100%;background:var(--accent);transition:.25s}.question{font-size:21px;font-weight:750;line-height:1.4;margin-bottom:16px}.answers{display:grid;gap:10px}.answer{width:100%;min-height:46px;padding:13px 14px;border-radius:12px;border:1px solid var(--border);background:#1d212b;color:var(--text);text-align:left}.answer:disabled{opacity:.72;cursor:default}.feedback{min-height:48px;margin-top:16px;font-weight:800;line-height:1.4}.next{display:none;margin-top:8px}.finalbox{margin:24px 0}.unlock{font-size:14px;font-weight:900}.lucca{font-size:44px;line-height:1;font-weight:950;margin-top:14px}.date{font-size:22px;font-weight:900;margin-top:22px}.mode{font-weight:900;margin-top:10px}@media(max-width:480px){h1{font-size:36px}.lucca{font-size:38px}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+<section id="intro" class="center">
+<div class="eyebrow">ACCESSO RISERVATO</div>
+<h1>SPECIAL GUEST</h1>
+<p class="introtext">La tua presenza è stata richiesta per una missione classificata.</p>
+<div class="missionbox"><div>9 PROVE</div><div>3 UNIVERSI</div><div>1 RICOMPENSA</div></div>
+<p class="muted">Solo chi supera il test potrà accedere al contenuto riservato.</p>
+<button id="start" class="primary">INIZIA LA MISSIONE ▶</button>
+</section>
+
+<section id="game" class="hidden">
+<div class="top"><div id="category" class="category"></div><div id="counter" class="counter"></div></div>
+<div class="progressTrack"><div id="progress" class="progress"></div></div>
+<div class="card"><div id="question" class="question"></div><div id="answers" class="answers"></div><div id="feedback" class="feedback" aria-live="polite"></div><button id="next" class="primary next">CONTINUA ▶</button></div>
+</section>
+
+<section id="final" class="hidden center" aria-live="polite">
+<div id="rankLabel" class="eyebrow"></div>
+<h1 id="missionTitle"></h1>
+<p id="missionNote" class="muted"></p>
+<div class="finalbox"><div class="unlock">🔓 SBLOCCATO</div><div class="lucca">LUCCA<br>COMICS</div><div class="date">30–31 OTTOBRE 2026</div><div class="mode">🎮 MODALITÀ: CO-OP</div></div>
+</section>
+</main>
+<script>
+const qs=[
+['🃏 POKÉMON TCG','Prima dell’introduzione delle carte Pokémon-ex, quale meccanica caratterizzava molti Pokémon potenti dell’era Neo?',['Pokémon LEGEND','Pokémon-liv.X','Pokémon-ex','Pokémon ☆'],3,'Professor Oak annuisce soddisfatto. Puoi continuare. 🎓','Professor Oak vorrebbe scambiare due parole con te. In privato. 👀'],
+['🃏 POKÉMON TCG','Quale espansione dell’era e-Card è famosa tra i collezionisti anche per le rarissime Crystal Pokémon?',['Expedition','Skyridge','EX Ruby & Sapphire','Neo Destiny'],1,'Il collezionista dentro di te può dormire tranquillo. Il binder è salvo. 🃏','Un collezionista da qualche parte ha appena chiuso il binder con più forza del necessario. 😭'],
+['🃏 POKÉMON TCG','Quale di questi Pokémon ha avuto una celebre Gold Star nell’espansione EX Deoxys?',['Rayquaza','Lugia','Charizard','Mew'],0,'Professor Oak prende nota. Forse questa Pokédex può davvero affidartela. 👀','Professor Oak aveva grandi aspettative. Aveva. 🎓'],
+['🎩 CUPHEAD','In Cuphead: Out of the Cards, quale combinazione descrive le Special Card?',['18 Cel + 9 Pop-Up + 9 Milestone','9 Cel + 18 Pop-Up + 9 Milestone','18 Contract + 18 Pop-Up','36 Milestone'],0,'Cuphead approva. Per una volta, nessun patto col Diavolo necessario. 🎲','Cuphead non approva. E il Diavolo ha già preparato il contratto. 😈'],
+['🎩 CUPHEAD','Qual è la particolarità delle Cel Cards?',['Usano elementi sovrapponibili in acetato','Contengono frammenti del cabinato','Sono tutte numerate /18','Sono stampate su pergamena'],0,'King Dice ti lascia passare. Non succede spesso. 🎩','King Dice ti guarda come se avessi appena perso l’anima al casinò. 🎲'],
+['🦖 DINOSAURS','Quale abbinamento Tier-effetto è corretto in Release the Creatures: Dinosaurs!?',['Tier A = Reptile + Drip-off','Tier B = Rainbow + oro metallizzato','Tier C = Magma Holo','Tier S = Silver'],0,'Dario approva. Nessuna tessera da collezionista verrà ritirata oggi. 🦖','Dario ha interrotto la live per controllare cosa hai appena risposto. 🦖'],
+['🦖 DINOSAURS','Quale speciale si apre come una brochure a quattro pagine e rappresenta formazioni geologiche?',['Landscape','Safari','Masterpiece','Timeshifted'],0,'Dario non ha niente da ridire. Evento più raro di una Fossil Card. 🦴','Dario ha appena rivalutato la tua tessera da collezionista. E non in positivo. 🦴'],
+['🎬 MARVEL','Nel MCU, quale Gemma dell’Infinito era contenuta nel Tesseract?',['Spazio','Mente','Potere','Realtà'],0,'Thanos approva. Per questa volta niente schiocco. 🫰','Nick Fury ti ha appena tolto l’accesso allo S.H.I.E.L.D. 👁️'],
+['🎬 MARVEL','In Captain America: The Winter Soldier, come si chiama il progetto che seleziona preventivamente potenziali minacce?',['Project Insight','Project Pegasus','Project Rebirth','Project Exodus'],0,'Doctor Strange conferma: eri nella timeline giusta. 🔮','Doctor Strange ha visto 14.000.605 risposte. Questa non era quella giusta. 🔮']
+];
+let i=0,score=0,locked=false;
+const $=id=>document.getElementById(id);
+$('start').addEventListener('click',()=>{$('intro').classList.add('hidden');$('game').classList.remove('hidden');render();});
+function render(){locked=false;const q=qs[i];$('category').textContent=q[0];$('counter').textContent=(i+1)+' / '+qs.length;$('progress').style.width=((i+1)/qs.length*100)+'%';$('question').textContent=q[1];$('feedback').textContent='';$('next').style.display='none';$('answers').innerHTML='';q[2].forEach((a,j)=>{const b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+j)+') '+a;b.addEventListener('click',()=>answer(j));$('answers').appendChild(b);});}
+function answer(j){if(locked)return;locked=true;const q=qs[i];if(j===q[3])score++;$('feedback').textContent=(j===q[3]?'✅ '+q[4]:'❌ '+q[5]);document.querySelectorAll('.answer').forEach(b=>b.disabled=true);$('next').style.display='inline-block';}
+function showFinal(){$('game').classList.add('hidden');$('final').classList.remove('hidden');if(score===9){$('rankLabel').textContent='RANK S · 9/9';$('missionTitle').textContent='MISSIONE COMPLETATA';$('missionNote').textContent='ACCESSO ELITE CONCESSO.';}else if(score>=7){$('rankLabel').textContent='RANK A · '+score+'/9';$('missionTitle').textContent='MISSIONE COMPLETATA';$('missionNote').textContent='ACCESSO CONCESSO. Qualche dubbio, ma passi. 😌';}else{$('rankLabel').textContent='RANK B · '+score+'/9';$('missionTitle').textContent='MISSIONE COMPLETATA… PIÙ O MENO';$('missionNote').textContent='Il Consiglio dei Nerd ha deciso di chiudere un occhio. 👀';}}
+$('next').addEventListener('click',()=>{i++;if(i<qs.length)render();else showFinal();});
+</script>
+</body>
+</html>
